@@ -5229,6 +5229,8 @@
       "title": "Obsession",
       "year": 2026,
       "rating": 7.9,
+      "price": 34.99,
+      "marketValue": 60.00,
       "genres": ["Thriller", "Romance", "Horreur"],
       "people": ["Inde Navarrette", "Michael Johnston", "Megan Lawless", "Cooper Tomlinson", "Andy Richter", "Haley Fitzgerald"],
       "directors": ["Curry Barker"],
@@ -5237,9 +5239,16 @@
       "poster": "https://media.themoviedb.org/t/p/w440_and_h660_face/bRwnj8WEKBCvmfeUNOukJPwB43K.jpg",
       "netflixPoster": "https://media.themoviedb.org/t/p/w1000_and_h563_face/88Vfeq51n939zvJ0YPCTT7b2Tte.jpg",
       "altPoster": "https://static.fnac-static.com/multimedia/Images/FR/NR/c5/5a/3a/20601541/1507-1/tsp20260722091042/Obseion-Edition-Speciale-Fnac-Steelcase-Blu-ray-4K-Ultra-HD.jpg",
+
+      "technicalSpecs": {
+      "resolution": "4K",
+      "hdr": "Dolby Vision",
+      "audio": "Dolby Atmos"
+  },
       "tags": ["4K", "Steelbook"],
+      "categories": ["Horreur"],
       "country": "États-Unis",
-      "added": "2026-10-06"
+      "added": "2026-10-05"
     },
     {
       "id": "tt33764258",
@@ -5534,7 +5543,7 @@
       "id": "tt31450459",
       "title": "Digger",
       "year": 2026,
-      "rating": 0.0,
+      "rating": 7.3,
       "genres": ["Drame", "Comédie", "Satire"],
       "people": ["Tom Cruise", "Sandra Hüller", "Riz Ahmed", "John Goodman", "Emma D'Arcy", "Jesse Plemons", "Sophie Wilde", "Burn Gorman"],
       "directors": ["Alejandro G. Iñarritu"],
