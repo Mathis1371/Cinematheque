@@ -900,3 +900,133 @@ body.noscroll .hero-dots button.on i{animation-play-state:paused}
 .wtarget .input{width:100px;height:34px}
 .wrank{font-family:var(--display);font-size:30px;line-height:1}
 .table .prio-btns button{height:24px;min-width:28px}
+
+/* ==========================================================
+   Optimisation téléphone & appli iPhone (écran d'accueil)
+   ========================================================== */
+:root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+html{-webkit-tap-highlight-color:transparent}
+body{min-height:100dvh;padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+input[type=search]{-webkit-appearance:none;appearance:none}
+input[type=search]::-webkit-search-decoration{-webkit-appearance:none}
+.palette-in input::-webkit-search-cancel-button{display:none}
+.pal-cancel{display:none}
+.back-btn{display:none}
+
+/* En-tête sous la barre d'état / Dynamic Island (appli plein écran) */
+.header{padding-top:var(--sat);height:calc(var(--header) + var(--sat))}
+.st-bar{top:calc(var(--header) + var(--sat))}
+
+/* Pas de menu « Enregistrer l'image » sur un appui long, pas de sélection accidentelle */
+.pcard,.lcard,.tcard,.scard,.spot,.wcard,.bcard,.up-card,.tabbar,.chip,.btn,.icon-btn,.seg,.more-sheet,.hero{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+img{-webkit-touch-callout:none}
+
+/* ---------- Écrans tactiles ---------- */
+@media (hover:none) and (pointer:coarse){
+  /* 16 px minimum : sinon Safari zoome la page à chaque saisie */
+  .input,.select,input,select,textarea{font-size:16px}
+  /* Zones tactiles plus confortables */
+  .chip{height:36px;padding:0 14px}
+  .stars{gap:4px}.stars button{width:28px;height:28px}
+  .seg button{height:42px;padding:0 14px}
+  .hero-dots button{position:relative}
+  .hero-dots button::after{content:"";position:absolute;inset:-14px -4px}
+  .kbd,.pal-foot,.kb-only{display:none}
+  .pal-cancel{display:block;flex:none;color:var(--accent2);font-weight:600;font-size:16px;padding:10px 0 10px 6px}
+  .pal-item{padding:10px}
+  input[type=checkbox]{width:22px!important;height:22px!important;flex:none}
+  .st-nav button{padding:10px 13px}
+  .bpin{width:38px;height:38px;top:8px;right:8px}
+  /* Les effets de survol « restent collés » après un appui sur iPhone : on les remplace par un retour au toucher */
+  .lcard:hover,.up-card:hover,.scard:hover,.hub-card:hover,.bcard:hover,.medal:hover,.bcell:hover,.home-stats a:hover,.spot:hover,.wcard:hover,.shop:hover,.heat .hc:hover{transform:none}
+  .tcard:hover .tp,.pcard:hover .pp,.pcard:hover .pp img.ok,.hub-card:hover .mosaic,.spot:hover .bg img,.logo:hover .logo-mark{transform:none}
+  .pcard:hover .pp{box-shadow:none}
+  .pcard:active .pp,.tcard:active .tp,.lcard:active,.scard:active,.spot:active,.wcard:active,.bcard:active,.up-card:active,.hub-card:active,.home-stats a:active{transform:scale(.97);transition:transform .12s}
+  .pal-item:active,.more-item:active{background:rgba(255,255,255,.07)}
+}
+
+/* ---------- Téléphone ---------- */
+@media (max-width:820px){
+  .header{height:calc(var(--header) + var(--sat))}
+  .hero{height:62svh}
+  .overlay{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .totop{bottom:calc(76px + var(--sab))}
+  .tabbar a.active::before{content:"";position:absolute;top:0;width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--accent2)}
+  .tabbar a,.tabbar button{position:relative}
+  html.standalone body.has-back .back-btn{display:grid}
+  .back-btn{margin-right:-6px;border:0;background:none;width:32px}
+  .back-btn svg{width:22px;height:22px}
+}
+@media (max-width:700px){
+  /* Barre d'outils du catalogue : 2 lignes au lieu de 3 */
+  .toolbar{row-gap:0;gap:8px;flex-wrap:wrap}
+  .toolbar::after{content:"";flex-basis:100%;order:1;height:0}
+  .toolbar .field{flex:1 1 0;min-width:0;order:0}
+  .toolbar #fToggle{order:0;width:44px;padding:0;font-size:0;gap:0;position:relative;flex:none;height:42px;border-radius:12px}
+  .toolbar #fToggle svg{width:18px;height:18px}
+  .toolbar #fCount:not(:empty){position:absolute;top:-5px;right:-5px;font-size:11px;font-weight:700;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center}
+  .toolbar .seg{order:0;flex:none}
+  .toolbar #sort,.toolbar #group{order:2;flex:1 1 0;min-width:0;margin-top:8px;text-overflow:ellipsis}
+  .toolbar #dir{order:2;margin-top:8px;flex:none}
+  .toolbar>.select:not(#sort):not(#group){order:2;flex:1 1 100%;margin-top:8px}
+  .page-head{margin-bottom:16px}
+  .page-head .btn{height:38px;padding:0 14px}
+
+  /* Fiche film plein écran : boutons sous l'encoche, poignée pour glisser vers le bas */
+  .overlay{padding:0}
+  .m-top{top:calc(12px + var(--sat))}
+  .sheet{min-height:100dvh;border:0}
+  .sheet::before{content:"";position:absolute;z-index:4;top:calc(6px + var(--sat));left:50%;width:40px;height:5px;margin-left:-20px;border-radius:5px;background:rgba(255,255,255,.35)}
+  .m-hero{height:calc(220px + var(--sat))}
+  .m-similar{padding-bottom:calc(30px + var(--sab))}
+
+  /* Fenêtres (ajout, modification, « Ce soir ? », défis) : feuille iOS qui monte du bas */
+  .overlay:has(> .editor){padding:calc(var(--sat) + 10px) 0 0;align-items:stretch}
+  .editor{width:100%!important;min-height:100%;border-radius:20px 20px 0 0;border-bottom:0;display:flex;flex-direction:column;transform:translateY(60px)}
+  .editor-h{position:sticky;top:0;z-index:3;background:var(--bg2);border-radius:20px 20px 0 0;padding:16px 18px 14px}
+  .editor-h::before{content:"";position:absolute;top:6px;left:50%;width:40px;height:5px;margin-left:-20px;border-radius:5px;background:var(--line2)}
+  .editor-h h2{font-size:18px;padding-right:10px}
+  .editor-b{padding:18px;flex:1}
+  .editor-f{position:sticky;bottom:0;z-index:3;background:rgba(17,17,20,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:12px 18px calc(12px + var(--sab))}
+
+  /* Recherche : collée en haut, liste ajustée au-dessus du clavier */
+  .overlay:has(> .palette){padding:calc(var(--sat) + 8px) 10px 0}
+  .palette{margin-top:0;border-radius:16px}
+  .palette-in{padding:0 14px}
+  .palette-in input{height:54px}
+  .pal-list{max-height:calc(var(--vvh,100dvh) - var(--sat) - 90px)}
+
+  /* Steelbooks : compteurs sur une ligne, vitrine sur 2 colonnes */
+  .steel-head{padding:20px}
+  .steel-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}
+  .steel-stat{min-width:0;padding:10px 4px}
+  .steel-stat b{font-size:28px}
+  .steel-stat span{font-size:9px;letter-spacing:.8px}
+  .sgrid{grid-template-columns:repeat(2,1fr);gap:12px}
+
+  /* Fiche : note perso sur toute la largeur, recherche, fenêtres compactes */
+  .m-actions .stars{display:flex;flex-basis:100%;min-width:0;max-width:100%;gap:2px;margin-top:2px}
+  .m-actions .stars button{flex:1 1 0;width:auto;min-width:0;max-width:30px;height:30px}
+  .palette-in input{min-width:0}
+  .editor-f .btn{flex:1 1 auto;padding:0 12px;height:44px}
+  .roulette{padding:18px 18px 22px}
+  .roul-stage{width:min(170px,42vw);margin:4px auto 14px}
+  .roul-title{font-size:30px}
+  .toasts{left:16px;right:16px;transform:none}
+  .toast{text-align:center}
+}
+
+/* Glisser pour fermer / tirer pour actualiser */
+.overlay.dragging>*{transition:none!important}
+.ptr{position:fixed;left:50%;top:calc(var(--header) + var(--sat) + 10px);z-index:45;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:var(--panel2);border:1px solid var(--line2);display:grid;place-items:center;color:var(--accent2);opacity:0;transform:translateY(-30px) scale(.6);pointer-events:none;box-shadow:var(--shadow)}
+.ptr svg{width:20px;height:20px}
+.ptr.ready svg{color:#fff}
+.ptr.spin svg{animation:spin .8s linear infinite}
+
+/* Paysage sur iPhone : on garde l'en-tête compact */
+@media (max-width:950px) and (max-height:500px) and (orientation:landscape){
+  .hero{height:88svh;min-height:300px}
+  .tabbar{height:calc(50px + var(--sab))}
+  .tabbar span{display:none}
+  body{padding-bottom:calc(50px + var(--sab))}
+}

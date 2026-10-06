@@ -571,7 +571,7 @@ function renderCatalog(scope) {
       <div class="page-sub">${isWish ? `${plural(base.length, 'film')} convoité${base.length > 1 ? 's' : ''} · ${base.filter(m => m.steel).length} en steelbook` : `${plural(base.length, 'film')} · ${base.filter(m => m.fmt === '4K').length} en 4K · ${base.filter(m => isSeen(m)).length} vus`}</div></div>
       <div style="display:flex;gap:8px"><button class="btn" id="catRandom">${ICON.dice} Au hasard</button><button class="btn primary" id="catAdd">+ Ajouter</button></div></div>
     <div class="toolbar">
-      <div class="field">${ICON.search}<input class="input" id="q" type="search" placeholder="Titre, réalisateur, acteur, genre…" value="${esc(f.q)}" autocomplete="off"></div>
+      <div class="field">${ICON.search}<input class="input" id="q" type="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Titre, réalisateur, acteur, genre…" value="${esc(f.q)}" autocomplete="off"></div>
       <button class="btn" id="fToggle">${ICON.filter} Filtres <span id="fCount"></span></button>
       <select class="select" id="sort">${Object.entries(SORTS).filter(([k]) => isWish ? !['price', 'value', 'gain', 'mine'].includes(k) : !['score', 'prio'].includes(k)).map(([k, v]) => `<option value="${k}"${f.sort === k ? ' selected' : ''}>${v}</option>`).join('')}</select>
       <button class="icon-btn" id="dir" title="Inverser l'ordre" style="border-radius:12px;width:42px;height:42px">${f.dir === 'asc' ? '↑' : '↓'}</button>
@@ -953,9 +953,10 @@ function openEditor(m, opt = {}) {
 const PAGES = [['Accueil', '#/'], ['Ma collection', '#/collection'], ['Wishlist', '#/wishlist'], ['Prochainement', '#/prochainement'], ['Steelbooks', '#/steelbooks'], ['Statistiques', '#/stats'], ['Bingo', '#/bingo'], ['Données & réglages', '#/reglages']];
 function openPalette() {
   if ($('.palette')) return;
-  const ov = overlay(`<div class="palette"><div class="palette-in">${ICON.search}<input id="palQ" placeholder="Film, réalisateur, acteur, page…" autocomplete="off"><span class="kbd">Échap</span></div><div class="pal-list" id="palList"></div>
+  const ov = overlay(`<div class="palette"><div class="palette-in">${ICON.search}<input id="palQ" type="search" enterkeyhint="search" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Film, réalisateur, acteur, page…" autocomplete="off"><span class="kbd">Échap</span><button class="pal-cancel" type="button">Annuler</button></div><div class="pal-list" id="palList"></div>
     <div class="pal-foot"><span>↑↓ naviguer</span><span>↵ ouvrir</span><span>Ctrl+K pour revenir ici</span></div></div>`);
   const inp = $('#palQ', ov), box = $('#palList', ov);
+  $('.pal-cancel', ov).onclick = () => closeOverlay(ov);
   let items = [], sel = 0;
   const people = {};
   S.movies.forEach(m => [...m.directors, ...m.people].forEach(p => people[p] = (people[p] || 0) + 1));
@@ -1059,7 +1060,7 @@ function renderSettings() {
       ${S.source === 'local' && S.fileAvailable ? '<button class="btn danger" id="sReset">Revenir au fichier data/movies.json</button>' : ''}</div></div>
     <div class="set-card"><h3>👁️ Mes données perso</h3><p>${nSeen} films vus, ${nRat} notes personnelles, ${plural((S.user.bingos || []).length, 'défi')} Bingo perso et ${Object.keys(S.user.wish || {}).length} réglages de wishlist (priorités, prix visés), gardés dans ce navigateur. Fais une sauvegarde pour les retrouver sur un autre appareil.</p>
       <div class="btns"><button class="btn" id="sUExp">${ICON.dl} Sauvegarder</button><button class="btn" id="sUImp">${ICON.ul} Restaurer</button></div></div>
-    <div class="set-card"><h3>⌨️ Raccourcis</h3><p style="line-height:2"><span class="kbd">Ctrl K</span> ou <span class="kbd">/</span> rechercher · <span class="kbd">R</span> film au hasard · <span class="kbd">N</span> ajouter un film · <span class="kbd">← →</span> film précédent / suivant · <span class="kbd">Échap</span> fermer</p></div>
+    <div class="set-card kb-only"><h3>⌨️ Raccourcis</h3><p style="line-height:2"><span class="kbd">Ctrl K</span> ou <span class="kbd">/</span> rechercher · <span class="kbd">R</span> film au hasard · <span class="kbd">N</span> ajouter un film · <span class="kbd">← →</span> film précédent / suivant · <span class="kbd">Échap</span> fermer</p></div>
   </div>
   <div class="section-title">Qualité des données · ${iss.length ? plural(iss.length, 'point') + ' à vérifier' : 'tout est propre ✨'}</div>
   <div>${iss.map(x => `<div class="issue"><span class="ic">${x.ic}</span><div><b>${esc(x.t)}</b> <span class="dim">(${x.films.length})</span>${x.hint ? `<div class="dim" style="font-size:13px">${esc(x.hint)}</div>` : ''}<div class="films" data-ctx>${x.films.slice(0, 40).map(m => `<span data-k="${esc(m.key)}">${esc(m.title)}</span>`).join(', ')}${x.films.length > 40 ? ` … +${x.films.length - 40}` : ''}</div></div></div>`).join('')}</div></div>`;
